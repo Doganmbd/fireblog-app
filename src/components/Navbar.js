@@ -52,7 +52,7 @@ export default function Navbar() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <AccountCircle />
+                <AccountCircle style={{fontSize:"40px"}}/>
               </IconButton>
               <Menu
                 id="menu-appbar"
