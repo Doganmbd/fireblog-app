@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider,createUserWithEmailAndPassword ,updateProfile,signInWithEmailAndPassword,signOut,signInWithPopup} from 'firebase/auth';
 
 // Your web app's Firebase configuration
 const app =initializeApp ({
@@ -22,3 +22,55 @@ const app =initializeApp ({
 
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
+
+export const signup = async (email, password,navigate,displayName)=> {
+  try{
+      let userCredential= await createUserWithEmailAndPassword(auth, email, password)
+      await updateProfile(auth.currentUser, {
+          displayName: displayName , })
+      console.log(userCredential);
+
+     
+  } catch (error) {
+     alert(error.message) 
+     
+  }
+
+}
+
+export const login =async (email, password,navigate)=> {
+    
+  try{
+      let userCredential = await signInWithEmailAndPassword(auth, email, password)
+      console.log(userCredential);
+
+     
+  } catch (error) {
+       alert(error.message) 
+ 
+      
+  }
+
+}
+
+export const logOut = () => {
+  signOut(auth);
+ 
+  
+};
+
+
+export const loginWithGoogle = (navigate) => {
+  //? Google ile giriş yapılması için kullanılan firebase metodu
+  const provider = new GoogleAuthProvider();
+  //? Açılır pencere ile giriş yapılması için kullanılan firebase metodu
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      console.log(result);
+      navigate("/");
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      console.log(error);
+    });
+};
