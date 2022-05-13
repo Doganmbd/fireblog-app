@@ -1,21 +1,27 @@
-import {createContext,useState} from "react"
+import {createContext,useState,useContext , useEffect} from "react"
 
-import {signup,login,logOut,loginWithGoogle} from '../helpers/firebase'
+import {signup,login,logOut,loginWithGoogle,onAuthStateChanged} from '../helpers/firebase'
 
 
 export const AuthContext = createContext()
 
-
+export function useAuth() {
+    return useContext(AuthContext);
+  }
 
 const AuthContextProvider = ({children}) => {
 
     const [currentUser, setCurrentUser] = useState()
+    const [loading, setLoading] = useState(true)
 
-
-
-
-
-
+    useEffect(() => {
+      const unsubscribe = onAuthStateChanged(user => {
+        setCurrentUser(user)
+        setLoading(false) })
+    
+      return unsubscribe ;
+    }, [])
+    
 
     const values = {
         currentUser,
@@ -27,7 +33,7 @@ const AuthContextProvider = ({children}) => {
 
   return (
     <AuthContext.Provider value = {values} >
-        {children}
+        {!loading && children}
     </AuthContext.Provider>
   )
 }
