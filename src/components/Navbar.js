@@ -11,6 +11,10 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
 
+
+
+import SvgIcon from '@mui/material/SvgIcon';
+
 export default function Navbar() {
   
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -25,11 +29,21 @@ export default function Navbar() {
     setAnchorEl(null);
   };
 
+
+  function HomeIcon(props) {
+    return (
+      <SvgIcon {...props}>
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+      </SvgIcon>
+    );
+  }
+
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       
-      <AppBar position="static">
-        <Toolbar>
+      <AppBar position="static"  color="success">
+        <Toolbar  >
           <IconButton
             size="large"
             edge="start"
@@ -37,10 +51,10 @@ export default function Navbar() {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+        <HomeIcon  color="inherit" sx={{ fontSize: 40 }} />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} style={{fontFamily: 'Water Brush'}} >
-             <span>{"< < < < M.B.D > > > >"}</span>
+             <span>{"< < < < ──── M.B.D ──── > > > > "}</span>
           </Typography>
          
             <div>
